@@ -14,9 +14,9 @@ My work focused on separating database operations from the user interface so the
 - Keep database responsibilities separate from interface logic.
 - Translate client requirements into useful filters and visual information.
 
-## CRUD Module
+## Maintained CRUD Module
 
-The reusable [`CRUD_Python_Module.py`](CRUD_Python_Module.py) defines an `AnimalShelter` class that centralizes the application's MongoDB connection and data operations.
+The maintained [`animal_shelter.py`](animal_shelter.py) module defines an `AnimalShelter` class that centralizes the application's MongoDB connection and data operations. It operates directly on the configured collection, validates write inputs, escapes credentials in connection strings, supports dependency injection for tests, and closes client resources it creates.
 
 | Operation | Purpose |
 | --- | --- |
@@ -25,7 +25,45 @@ The reusable [`CRUD_Python_Module.py`](CRUD_Python_Module.py) defines an `Animal
 | Update | Modify fields in a matching record |
 | Delete | Remove a matching record |
 
-Credentials are supplied to the class constructor instead of being written directly into the source code. The database, collection, host, and port are defined in one place to make the connection behavior easier to understand and maintain.
+Credentials are supplied to the class constructor instead of being written directly into the source code. Host, port, database, collection, and authentication source are configurable, while safe local defaults keep the basic setup concise.
+
+## Quick Start
+
+1. Create a virtual environment and install the runtime dependency:
+
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate
+   python -m pip install -r requirements.txt
+   ```
+
+2. Supply credentials through your environment or another secret-management method, then create the data layer:
+
+   ```python
+   import os
+
+   from animal_shelter import AnimalShelter
+
+   shelter = AnimalShelter(
+       username=os.environ["MONGODB_USERNAME"],
+       password=os.environ["MONGODB_PASSWORD"],
+   )
+
+   dogs = shelter.read({"animal_type": "Dog"}, limit=25)
+   shelter.close()
+   ```
+
+Do not commit database passwords or local `.env` files.
+
+## Tests
+
+The unit tests inject a mock MongoDB client, so CRUD behavior can be checked without a running database:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+The suite covers collection selection, create/read/update/delete behavior, result handling, limits, and validation that prevents empty write operations.
 
 ## Design Approach
 
@@ -40,7 +78,10 @@ Separating the CRUD module from the dashboard improved:
 
 ## Repository Contents
 
-- [`CRUD_Python_Module.py`](CRUD_Python_Module.py) - reusable MongoDB data-access class
+- [`animal_shelter.py`](animal_shelter.py) - maintained, testable MongoDB data-access class
+- [`tests/test_animal_shelter.py`](tests/test_animal_shelter.py) - dependency-injected unit tests
+- [`CRUD_Python_Module.py`](CRUD_Python_Module.py) - original course implementation retained for comparison
+- [`requirements.txt`](requirements.txt) - runtime dependency manifest
 - Project milestones and reports - supporting design and implementation documentation
 - Project packages - dashboard and course-delivery artifacts retained from the original coursework
 
@@ -48,9 +89,9 @@ Separating the CRUD module from the dashboard improved:
 
 Python, MongoDB, PyMongo, CRUD operations, client-server design, database integration, modular development, requirements analysis, debugging, and client-centered problem solving.
 
-## Portfolio Note
+## Project Status
 
-This repository preserves the original course deliverables. A future cleanup can move the dashboard source out of the packaged archives, add automated tests, and use environment-based configuration for easier local setup.
+The core data-access layer is now visible, configurable, and unit tested. The original dashboard remains inside the retained course-delivery archives; extracting and documenting that interface is the next repository cleanup step.
 
 ## Author
 

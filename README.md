@@ -108,7 +108,6 @@ Separating the CRUD module from the dashboard improved:
 - [`CRUD_Python_Module.py`](CRUD_Python_Module.py) - original course implementation retained for comparison
 - [`requirements.txt`](requirements.txt) - runtime dependency manifest
 - Project milestones and reports - supporting design and implementation documentation
-- Project packages - dashboard and course-delivery artifacts retained from the original coursework
 
 ## Skills Demonstrated
 
@@ -116,7 +115,7 @@ Python, MongoDB, PyMongo, CRUD operations, client-server design, database integr
 
 ## Project Status
 
-The core data-access layer and dashboard are now visible and configurable, and the logic that can run without MongoDB or Dash is unit tested. The original course-delivery archives remain temporarily for historical comparison.
+The core data-access layer and dashboard are visible and configurable, and the logic that can run without MongoDB or Dash is unit tested. Credential-bearing course archives were removed after the maintained, sanitized source was published.
 
 ## Author
 

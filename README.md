@@ -1,5 +1,7 @@
 # Animal Rescue CRUD and Dashboard Project
 
+[![Python tests](https://github.com/PhantomOSG-25/CS-340-Client-Server-Development/actions/workflows/test.yml/badge.svg)](https://github.com/PhantomOSG-25/CS-340-Client-Server-Development/actions/workflows/test.yml)
+
 **CS-340 Client-Server Development | Python, MongoDB, PyMongo**
 
 This project was developed for a client scenario involving Grazioso Salvare, an organization that identifies and trains rescue animals. The goal was to make animal records easier to store, search, update, and use through a data-driven dashboard.
